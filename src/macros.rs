@@ -31,26 +31,6 @@ macro_rules! wrap_callback {
 }
 
 #[doc(hidden)]
-macro_rules! wrap_callback_multi {
-    ($f:expr, $F:ident, $n:ident) => {{
-        unsafe extern "C" fn trampoline< F: Fn(&[f64], &mut[f64])>(
-            x: sys::gsl_vector,
-            params: *mut ::std::os::raw::c_void,
-            f: sys::gsl_vector,
-        ) {
-            let f: &F = &*(params as *const F);
-            f(&x, &mut f)
-        }
-
-        sys::gsl_multiroot_function_struct {
-            f: Some(trampoline::<$F>),
-            n: $n,
-            params: &$f as *const _ as *mut _,
-        }
-    }};
-}
-
-#[doc(hidden)]
 macro_rules! wrap_callback_fdf {
     ($f:expr, $F:ident $(+ $lt:lifetime)?, $df:expr, $DF:ident $(+ $ltdf:lifetime)?, $fdf:expr, $FDF:ident) => {{
         unsafe extern "C" fn inner_f<$($lt,)? F: Fn(f64) -> f64 $( + $lt)?>(
