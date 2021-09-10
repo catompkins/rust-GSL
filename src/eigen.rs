@@ -3,6 +3,8 @@
 //
 
 /*!
+Functions for computing eigenvalues and eigenvectors of matrices Refer to `::types::eigen_symmetric_workspace` for solvers.
+
 ## References and Further Reading
 
 Further information on the algorithms described in this section can be found in the following book,

@@ -3,6 +3,8 @@
 //
 
 /*!
+Eigen System Solvers
+
 # Real Symmetric Matrices
 
 For real symmetric matrices, the library uses the symmetric bidiagonalization and QR reduction

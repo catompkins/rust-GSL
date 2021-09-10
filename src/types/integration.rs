@@ -1,6 +1,7 @@
 //
 // A rust binding for the GSL library by Guillaume Gomez (guillaume1.gomez@gmail.com)
 //
+//! Numerical Integration Algorithms
 
 #![allow(clippy::upper_case_acronyms)]
 
