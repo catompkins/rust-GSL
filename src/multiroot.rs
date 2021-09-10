@@ -1,6 +1,7 @@
 //
 // A rust binding for the GSL library by Guillaume Gomez (guillaume1.gomez@gmail.com)
 //
+//! Multiroot test algorithms, See `rgsl::types::multiroot` for solvers.
 use ffi::FFI;
 
 #[doc(alias = "gsl_multiroot_test_delta")]

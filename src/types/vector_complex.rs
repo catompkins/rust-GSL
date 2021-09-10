@@ -442,9 +442,9 @@ macro_rules! gsl_vec_complex {
             /// The subvector is formed in the same way as for gsl_vector_view_array but the new vector has
             /// n elements with a step-size of stride from one element to the next in the original
             /// array. Mathematically, the i-th element of the new vector v’ is given by,
-            ///
+            ///```text
             /// v'(i) = base[i*stride]
-            ///
+            ///```
             /// where the index i runs from 0 to n-1.
             ///
             /// Note that the view gives direct access to the underlying elements of the original array. A

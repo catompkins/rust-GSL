@@ -430,8 +430,10 @@ impl<'a> [<$rust_name View>]<'a> {
     /// new vector has n elements with a step-size of stride from one element to the next in the
     /// original vector. Mathematically, the i-th element of the new vector v’ is given by,
     ///
+    /// ```text
     /// v'(i) = v->data[(offset + i*stride)*v->stride]
     /// where the index i runs from 0 to n-1.
+    ///```
     ///
     /// Note that subvector views give direct access to the underlying elements of the original
     /// vector. For example, the following code will zero the even elements of the vector v of
@@ -472,7 +474,7 @@ impl<'a> [<$rust_name View>]<'a> {
     /// These functions return a vector view of an array. The start of the new vector is given by
     /// base and has n elements. Mathematically, the i-th element of the new vector v’ is given by,
     ///
-    /// ```text
+    /// ```C
     /// v'(i) = base[i]
     /// ```
     ///
@@ -500,7 +502,9 @@ impl<'a> [<$rust_name View>]<'a> {
     /// n elements with a step-size of stride from one element to the next in the original
     /// array. Mathematically, the i-th element of the new vector v’ is given by,
     ///
+    /// ```C
     /// v'(i) = base[i*stride]
+    ///```
     ///
     /// where the index i runs from 0 to n-1.
     ///

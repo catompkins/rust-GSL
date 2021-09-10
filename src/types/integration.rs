@@ -778,9 +778,9 @@ impl GLFixedTable {
         }
     }
 
-    /// For i in [0, …, t->n - 1], this function obtains the i-th Gauss-Legendre point xi and weight
-    /// wi on the interval [a,b]. The points and weights are ordered by increasing point value. A
-    /// function f may be integrated on [a,b] by summing wi * f(xi) over i.
+    /// For i in `[0, …, t->n - 1]`, this function obtains the i-th Gauss-Legendre point xi and weight
+    /// wi on the interval `[a,b]`. The points and weights are ordered by increasing point value. A
+    /// function f may be integrated on `[a,b]` by summing `wi * f(xi)` over i.
     ///
     /// Returns `(Value, xi, wi)`.
     #[doc(alias = "gsl_integration_glfixed_point")]

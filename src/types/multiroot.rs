@@ -16,13 +16,17 @@ Overview
 The problem of multidimensional root finding requires the simultaneous solution of n equations,
 f_i, in n variables, x_i,
 
+```text
 f_i (x_1, \dots, x_n) = 0 \qquad\hbox{for}~i = 1 \dots n.
+```
 
 In general there are no bracketing methods available for n dimensional systems, and no way of
 knowing whether any solutions exist. All algorithms proceed from an initial guess using a
 variant of the Newton iteration,
 
+```text
 x \to x' = x - J^{-1} f(x)
+```
 
 where x, f are vector quantities and J is the Jacobian matrix J_{ij} = \partial f_i / \partial x_j.
 Additional strategies can be used to enlarge the region of convergence. These include requiring a
@@ -33,9 +37,9 @@ Several root-finding algorithms are available within a single framework. The use
 high-level driver for the algorithms, and the library provides the individual functions necessary
 for each of the steps. There are three main phases of the iteration. The steps are,
 
-    - initialize solver state, `s`, for algorithm `T`
-    - update `s` using the iteration `T`
-    - test `s` for convergence, and repeat iteration if necessary
+- initialize solver state, `s`, for algorithm `T`
+- update `s` using the iteration `T`
+- test `s` for convergence, and repeat iteration if necessary
 
 The evaluation of the Jacobian matrix can be problematic, either because programming the derivatives
 is intractable or because computation of the n^2 terms of the matrix becomes too expensive.
@@ -56,11 +60,11 @@ use sys;
 ffi_wrapper!(
     MultiRootFSolverType,
     *const sys::gsl_multiroot_fsolver_type,
-    "The algorithms described in this section do not require any derivative information to be
+    "The multiroot algorithms described in this section do not require any derivative information to be
     supplied by the user. Any derivatives needed are approximated by finite differences.
     Note that if the finite-differencing step size chosen by these routines is inappropriate,
-    an explicit user-supplied numerical derivative can always be used with the
-    algorithms described in the previous section."
+    an explicit user-supplied numerical derivative can always be used with
+    derivative-based algorithms."
 );
 
 impl MultiRootFSolverType {
@@ -80,12 +84,16 @@ impl MultiRootFSolverType {
     /// The discrete Newton algorithm is the simplest method of solving a multidimensional
     /// system. It uses the Newton iteration
     ///
-    ///     x \to x - J^{-1} f(x)
+    ///```text
+    ///x \to x - J^{-1} f(x)
+    ///```
     ///
     /// where the Jacobian matrix J is approximated by taking finite differences of the function f.
     /// The approximation scheme used by this implementation is,
     ///
-    ///     J_{ij} = (f_i(x + \delta_j) - f_i(x)) / \delta_j
+    ///```text
+    ///J_{ij} = (f_i(x + \delta_j) - f_i(x)) / \delta_j
+    ///```
     ///
     /// where \delta_j is a step of size \sqrt\epsilon |x_j| with \epsilon being the machine
     /// precision (\epsilon \approx 2.22 \times 10^{-16}). The order of convergence of Newton’s
@@ -100,7 +108,9 @@ impl MultiRootFSolverType {
     /// avoids the expensive update of the Jacobian matrix on each iteration. The changes to
     /// the Jacobian are also approximated, using a rank-1 update,
     ///
-    ///     J^{-1} \to J^{-1} - (J^{-1} df - dx) dx^T J^{-1} / dx^T J^{-1} df
+    ///```text
+    ///J^{-1} \to J^{-1} - (J^{-1} df - dx) dx^T J^{-1} / dx^T J^{-1} df
+    ///```
     ///
     /// where the vectors dx and df are the changes in x and f. On the first iteration the inverse
     /// Jacobian is estimated using finite differences, as in the discrete Newton algorithm.
@@ -122,7 +132,8 @@ ffi_wrapper!(
     MultiRootFSolver,
     *mut sys::gsl_multiroot_fsolver,
     gsl_multiroot_fsolver_free
-    ;inner_call: sys::gsl_multiroot_function_struct => sys::gsl_multiroot_function_struct{ f: None, n: 0, params: std::ptr::null_mut() };
+    ;inner_call: sys::gsl_multiroot_function_struct => sys::gsl_multiroot_function_struct{ f: None, n: 0, params: std::ptr::null_mut() };,
+    "This is a workspace for multidimensional root-finding without derivatives."
 );
 
 impl MultiRootFSolver {
@@ -287,6 +298,5 @@ mod tests {
             iter += 1;
         }
         assert!(matches!(status, ::Value::Success))
-
     }
 }

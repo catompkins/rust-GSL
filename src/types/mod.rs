@@ -1,6 +1,7 @@
 //
 // A rust binding for the GSL library by Guillaume Gomez (guillaume1.gomez@gmail.com)
 //
+//! GSL modules that implement workspace-like structures.
 
 pub use self::basis_spline::BSpLineWorkspace;
 

@@ -19,7 +19,10 @@ A histogram made by counting events can be regarded as a measurement of a probab
 of each bin represents the probability of an event where the value of x falls in the range of that bin. The probability distribution function
 has the one-dimensional form p(x)dx where,
 
+```text
 p(x) = n_i/ (N w_i)
+```
+
 In this equation n_i is the number of events in the bin which contains x, w_i is the width of the bin and N is the total number of events.
 The distribution of events within each bin is assumed to be uniform.
 !*/
@@ -311,13 +314,13 @@ impl Histogram {
 }
 
 ffi_wrapper!(HistogramPdf, *mut sys::gsl_histogram_pdf, gsl_histogram_pdf_free,
-"The probability distribution function for a histogram consists of a set of bins which measure the \
-probability of an event falling into a given range of a continuous variable x. A probability \
-distribution function is defined by the following struct, which actually stores the cumulative \
-probability distribution function. This is the natural quantity for generating samples via the \
-inverse transform method, because there is a one-to-one mapping between the cumulative probability \
-distribution and the range [0,1]. It can be shown that by taking a uniform random number in this \
-range and finding its corresponding coordinate in the cumulative probability distribution we obtain \
+"The probability distribution function for a histogram consists of a set of bins which measure the
+probability of an event falling into a given range of a continuous variable x. A probability
+distribution function is defined by the following struct, which actually stores the cumulative
+probability distribution function. This is the natural quantity for generating samples via the
+inverse transform method, because there is a one-to-one mapping between the cumulative probability
+distribution and the range `[0,1]`. It can be shown that by taking a uniform random number in this
+range and finding its corresponding coordinate in the cumulative probability distribution we obtain
 samples with the desired probability distribution.");
 
 impl HistogramPdf {

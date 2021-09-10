@@ -38,7 +38,7 @@ encapsulates this data. The allocation function gsl_dht_alloc returns a gsl_dht 
 properly initialized with gsl_dht_init before it can be used to perform transforms on data sample
 vectors, for fixed \nu and M, using the gsl_dht_apply function. The implementation allows a scaling
 of the fundamental interval, for convenience, so that one can assume the function is defined on the
-interval [0,X], rather than the unit interval.
+interval `[0,X]`, rather than the unit interval.
 
 Notice that by assumption f(t) vanishes at the endpoints of the interval, consistent with the
 inversion formula and the sampling formula given above. Therefore, this transform corresponds to an

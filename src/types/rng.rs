@@ -6,28 +6,50 @@
 # Random Number Generation
 
 The library provides a large collection of random number generators which can be accessed through a uniform interface.
-Environment variables allow you to select different generators and seeds at runtime, so that you can easily switch between generators without needing to recompile your program.
+Environment variables allow you to select different generators and seeds at runtime, so that you can
+easily switch between generators without needing to recompile your program.
 Each instance of a generator keeps track of its own state, allowing the generators to be used in multi-threaded programs.
-Additional functions are available for transforming uniform random numbers into samples from continuous or discrete probability distributions such as the Gaussian, log-normal or Poisson distributions.
+Additional functions are available for transforming uniform random numbers into samples from continuous
+or discrete probability distributions such as the Gaussian, log-normal or Poisson distributions.
 
 ## General comments on random numbers
 
-In 1988, Park and Miller wrote a paper entitled “Random number generators: good ones are hard to find.” [Commun. ACM, 31, 1192–1201]. Fortunately, some excellent random number generators are available, though poor ones are still in common use. You may be happy with the system-supplied random number generator on your computer, but you should be aware that as computers get faster, requirements on random number generators increase. Nowadays, a simulation that calls a random number generator millions of times can often finish before you can make it down the hall to the coffee machine and back.
+In 1988, Park and Miller wrote a paper entitled “Random number generators: good ones are hard to find.”
+[Commun. ACM, 31, 1192–1201]. Fortunately, some excellent random number generators are available, though
+poor ones are still in common use. You may be happy with the system-supplied random number generator on your computer, but you should be aware that as computers get faster, requirements on random number generators increase. Nowadays, a simulation that calls a random number generator millions of times can often finish before you can make it down the hall to the coffee machine and back.
 
-A very nice review of random number generators was written by Pierre L’Ecuyer, as Chapter 4 of the book: Handbook on Simulation, Jerry Banks, ed. (Wiley, 1997). The chapter is available in postscript from L’Ecuyer’s ftp site (see references). Knuth’s volume on Seminumerical Algorithms (originally published in 1968) devotes 170 pages to random number generators, and has recently been updated in its 3rd edition (1997). It is brilliant, a classic. If you don’t own it, you should stop reading right now, run to the nearest bookstore, and buy it.
+A very nice review of random number generators was written by Pierre L’Ecuyer, as Chapter 4 of the book:
+Handbook on Simulation, Jerry Banks, ed. (Wiley, 1997). The chapter is available in postscript from
+L’Ecuyer’s ftp site (see references). Knuth’s volume on Seminumerical Algorithms (originally published
+in 1968) devotes 170 pages to random number generators, and has recently been updated in its 3rd edition (1997).
+It is brilliant, a classic. If you don’t own it, you should stop reading right now, run to the nearest bookstore, and buy it.
 
-A good random number generator will satisfy both theoretical and statistical properties. Theoretical properties are often hard to obtain (they require real math!), but one prefers a random number generator with a long period, low serial correlation, and a tendency not to “fall mainly on the planes.” Statistical tests are performed with numerical simulations. Generally, a random number generator is used to estimate some quantity for which the theory of probability provides an exact answer. Comparison to this exact answer provides a measure of “randomness”.
+A good random number generator will satisfy both theoretical and statistical properties.
+Theoretical properties are often hard to obtain (they require real math!), but one prefers a random
+number generator with a long period, low serial correlation, and a tendency not to “fall mainly on
+the planes.” Statistical tests are performed with numerical simulations. Generally, a random number
+generator is used to estimate some quantity for which the theory of probability provides an exact
+answer. Comparison to this exact answer provides a measure of “randomness”.
 
 ## The Random Number Generator Interface
 
-It is important to remember that a random number generator is not a “real” function like sine or cosine. Unlike real functions, successive calls to a random number generator yield different return values. Of course that is just what you want for a random number generator, but to achieve this effect, the generator must keep track of some kind of “state” variable.
-Sometimes this state is just an integer (sometimes just the value of the previously generated random number), but often it is more complicated than that and may involve a whole array of numbers, possibly with some indices thrown in. To use the random number generators, you do not need to know the details of what comprises the state, and besides that varies from algorithm to algorithm.
+It is important to remember that a random number generator is not a “real” function like sine or
+cosine. Unlike real functions, successive calls to a random number generator yield different return
+values. Of course that is just what you want for a random number generator, but to achieve this
+effect, the generator must keep track of some kind of “state” variable.
+Sometimes this state is just an integer (sometimes just the value of the previously generated random
+number), but often it is more complicated than that and may involve a whole array of numbers,
+possibly with some indices thrown in. To use the random number generators, you do not need to know
+the details of what comprises the state, and besides that varies from algorithm to algorithm.
 
-The random number generator library uses two special structs, RngType which holds static information about each type of generator and Rng which describes an instance of a generator created from a given RngType.
+The random number generator library uses two special structs, RngType which holds static information
+about each type of generator and Rng which describes an instance of a generator created from a given RngType.
 
 ## Performance
 
-The following table shows the relative performance of a selection the available random number generators. The fastest simulation quality generators are taus, gfsr4 and mt19937. The generators which offer the best mathematically-proven quality are those based on the RANLUX algorithm.
+The following table shows the relative performance of a selection the available random number
+generators. The fastest simulation quality generators are taus, gfsr4 and mt19937. The generators
+which offer the best mathematically-proven quality are those based on the RANLUX algorithm.
 
  * 1754 k ints/sec,    870 k doubles/sec, taus
  * 1613 k ints/sec,    855 k doubles/sec, gfsr4
@@ -44,7 +66,9 @@ The following table shows the relative performance of a selection the available 
 
 ## Random number environment variables
 
-The library allows you to choose a default generator and seed from the environment variables GSL_RNG_TYPE and GSL_RNG_SEED and the function gsl_rng_env_setup. This makes it easy try out different generators and seeds without having to recompile your program.
+The library allows you to choose a default generator and seed from the environment variables
+GSL_RNG_TYPE and GSL_RNG_SEED and the function gsl_rng_env_setup. This makes it easy try out
+different generators and seeds without having to recompile your program.
 
 ## References and Further Reading
 
@@ -54,20 +78,23 @@ Donald E. Knuth, The Art of Computer Programming: Seminumerical Algorithms (Vol 
 Further information is available in the review paper written by Pierre L’Ecuyer,
 
 P. L’Ecuyer, “Random Number Generation”, Chapter 4 of the Handbook on Simulation, Jerry Banks Ed., Wiley, 1998, 93–137.
-http://www.iro.umontreal.ca/~lecuyer/papers.html
+<http://www.iro.umontreal.ca/~lecuyer/papers.html>
 
 The source code for the DIEHARD random number generator tests is also available online,
 
 DIEHARD source code G. Marsaglia,
-http://stat.fsu.edu/pub/diehard/
+<http://stat.fsu.edu/pub/diehard/>
 A comprehensive set of random number generator tests is available from NIST,
 
-NIST Special Publication 800-22, “A Statistical Test Suite for the Validation of Random Number Generators and Pseudo Random Number Generators for Cryptographic Applications”.
-http://csrc.nist.gov/rng/
+NIST Special Publication 800-22, “A Statistical Test Suite for the Validation of Random Number
+Generators and Pseudo Random Number Generators for Cryptographic Applications”.
+<http://csrc.nist.gov/rng/>
 
 ## Acknowledgements
 
-Thanks to Makoto Matsumoto, Takuji Nishimura and Yoshiharu Kurita for making the source code to their generators (MT19937, MM&TN; TT800, MM&YK) available under the GNU General Public License. Thanks to Martin Lüscher for providing notes and source code for the RANLXS and RANLXD generators.
+Thanks to Makoto Matsumoto, Takuji Nishimura and Yoshiharu Kurita for making the source code to
+their generators (MT19937, MM&TN; TT800, MM&YK) available under the GNU General Public License.
+Thanks to Martin Lüscher for providing notes and source code for the RANLXS and RANLXD generators.
 !*/
 
 use crate::Value;
@@ -77,15 +104,18 @@ use std::os::raw::c_ulong;
 ffi_wrapper!(Rng, *mut sys::gsl_rng, gsl_rng_free);
 
 impl Rng {
-    /// This function returns a pointer to a newly-created instance of a random number generator of type T. For example, the following code creates an instance of the Tausworthe generator,
+    /// This function returns a pointer to a newly-created instance of a random number generator
+    /// of type T. For example, the following code creates an instance of the Tausworthe generator,
     ///
     /// ```Rust
     /// let r = Rng::new(gsl_rng_taus);
     /// ```
     ///
-    /// If there is insufficient memory to create the generator then the function returns a null pointer and the error handler is invoked with an error code of GSL_ENOMEM.
+    /// If there is insufficient memory to create the generator then the function returns a null
+    /// pointer and the error handler is invoked with an error code of GSL_ENOMEM.
     ///
-    /// The generator is automatically initialized with the default seed, gsl_rng_default_seed. This is zero by default but can be changed either directly or by using the environment variable
+    /// The generator is automatically initialized with the default seed, gsl_rng_default_seed.
+    /// This is zero by default but can be changed either directly or by using the environment variable
     /// GSL_RNG_SEED (see [`Random number environment variables`](https://www.gnu.org/software/gsl/manual/html_node/Random-number-environment-variables.html#Random-number-environment-variables)).
     #[doc(alias = "gsl_rng_alloc")]
     pub fn new(T: RngType) -> Option<Rng> {
@@ -98,35 +128,49 @@ impl Rng {
         }
     }
 
-    /// This function initializes (or ‘seeds’) the random number generator. If the generator is seeded with the same value of s on two different runs, the same stream of random numbers will be generated by successive calls to the routines below.
-    /// If different values of s >= 1 are supplied, then the generated streams of random numbers should be completely different. If the seed s is zero then the standard seed from the original implementation is used instead.
-    /// For example, the original Fortran source code for the ranlux generator used a seed of 314159265, and so choosing s equal to zero reproduces this when using gsl_rng_ranlux.
+    /// This function initializes (or ‘seeds’) the random number generator. If the generator is
+    /// seeded with the same value of s on two different runs, the same stream of random numbers
+    /// will be generated by successive calls to the routines below.
+    /// If different values of s >= 1 are supplied, then the generated streams of random numbers
+    /// should be completely different. If the seed s is zero then the standard seed from the original implementation is used instead.
+    /// For example, the original Fortran source code for the ranlux generator used a seed of 314159265,
+    /// and so choosing s equal to zero reproduces this when using gsl_rng_ranlux.
     ///
-    /// When using multiple seeds with the same generator, choose seed values greater than zero to avoid collisions with the default setting.
+    /// When using multiple seeds with the same generator, choose seed values greater than zero to
+    /// avoid collisions with the default setting.
     ///
-    /// Note that the most generators only accept 32-bit seeds, with higher values being reduced modulo 2^32. For generators with smaller ranges the maximum seed value will typically be lower.
+    /// Note that the most generators only accept 32-bit seeds, with higher values being reduced
+    /// modulo 2^32. For generators with smaller ranges the maximum seed value will typically be lower.
     #[doc(alias = "gsl_rng_set")]
     pub fn set(&mut self, s: usize) {
         unsafe { sys::gsl_rng_set(self.unwrap_unique(), s as _) }
     }
 
-    /// This function returns a random integer from the generator r. The minimum and maximum values depend on the algorithm used, but all integers in the range [min,max] are equally likely.
-    /// The values of min and max can be determined using the auxiliary functions gsl_rng_max (r) and gsl_rng_min (r).
+    /// This function returns a random integer from the generator r. The minimum and maximum values
+    /// depend on the algorithm used, but all integers in the range `[min,max]` are equally likely.
+    /// The values of min and max can be determined using the auxiliary functions gsl_rng_max (r)
+    /// and gsl_rng_min (r).
     #[doc(alias = "gsl_rng_get")]
     pub fn get(&mut self) -> usize {
         unsafe { sys::gsl_rng_get(self.unwrap_shared()) as _ }
     }
 
-    /// This function returns a double precision floating point number uniformly distributed in the range [0,1). The range includes 0.0 but excludes 1.0.
-    /// The value is typically obtained by dividing the result of gsl_rng_get(r) by gsl_rng_max(r) + 1.0 in double precision.
-    /// Some generators compute this ratio internally so that they can provide floating point numbers with more than 32 bits of randomness (the maximum number of bits that can be portably represented in a single unsigned long int).
+    /// This function returns a double precision floating point number uniformly distributed in the
+    /// range [0,1). The range includes 0.0 but excludes 1.0.
+    /// The value is typically obtained by dividing the result of gsl_rng_get(r) by gsl_rng_max(r)
+    /// + 1.0 in double precision.
+    /// Some generators compute this ratio internally so that they can provide floating point
+    /// numbers with more than 32 bits of randomness (the maximum number of bits that can be
+    /// portably represented in a single unsigned long int).
     #[doc(alias = "gsl_rng_uniform")]
     pub fn uniform(&mut self) -> f64 {
         unsafe { sys::gsl_rng_uniform(self.unwrap_unique()) }
     }
 
-    /// This function returns a positive double precision floating point number uniformly distributed in the range (0,1), excluding both 0.0 and 1.0.
-    /// The number is obtained by sampling the generator with the algorithm of gsl_rng_uniform until a non-zero value is obtained.
+    /// This function returns a positive double precision floating point number uniformly
+    /// distributed in the range (0,1), excluding both 0.0 and 1.0.
+    /// The number is obtained by sampling the generator with the algorithm of gsl_rng_uniform
+    /// until a non-zero value is obtained.
     /// You can use this function if you need to avoid a singularity at 0.0.
     #[doc(alias = "gsl_rng_uniform_pos")]
     pub fn uniform_pos(&mut self) -> f64 {

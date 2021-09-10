@@ -6,19 +6,21 @@
 # Chebyshev Approximations
 
 This chapter describes routines for computing Chebyshev approximations to univariate functions. A
-Chebyshev approximation is a truncation of the series f(x) = \sum c_n T_n(x), where the Chebyshev
-polynomials T_n(x) = \cos(n \arccos x) provide an orthogonal basis of polynomials on the interval
-[-1,1] with the weight function 1 / \sqrt{1-x^2}. The first few Chebyshev polynomials are,
-T_0(x) = 1, T_1(x) = x, T_2(x) = 2 x^2 - 1.
+Chebyshev approximation is a truncation of the series `f(x) = \sum c_n T_n(x)`, where the Chebyshev
+polynomials `T_n(x) = \cos(n \arccos x)` provide an orthogonal basis of polynomials on the interval
+\[-1,1\] with the weight function `1 / \sqrt{1-x^2}`. The first few Chebyshev polynomials are,
+`T_0(x) = 1, T_1(x) = x, T_2(x) = 2 x^2 - 1`.
 
 For further information see Abramowitz & Stegun, Chapter 22.
 
 ## Definitions
 
-The approximation is made over the range [a,b] using order+1 terms, including the coefficient
+The approximation is made over the range \[a,b\] using order+1 terms, including the coefficient
 `c[0]`. The series is computed using the following convention,
 
+```text
 f(x) = (c_0 / 2) + \sum_{n=1} c_n T_n(x)
+```
 
 which is needed when accessing the coefficients directly.
 

@@ -1,6 +1,7 @@
 //
 // A rust binding for the GSL library by Guillaume Gomez (guillaume1.gomez@gmail.com)
 //
+//! Root solver test algorithms, See `rgsl::types::roots` for solvers.
 
 #[doc(alias = "gsl_root_test_interval")]
 pub fn test_interval(x_lower: f64, x_upper: f64, epsabs: f64, epsrel: f64) -> ::Value {
