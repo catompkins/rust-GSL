@@ -291,9 +291,12 @@ mod test {
         let mut status = ::Value::Continue;
         let mut iter = 0_usize;
 
+        println!("Testing {} method", min.name().unwrap());
+
+        println!("iter, \t [x_lo, x_hi], \t min, \t error");
         while matches!(status, ::Value::Continue) && iter < max_iter {
             // iterate for next value
-            status = min.iterate(); // fails here w/ segfault
+            min.iterate();
 
             // test for convergence
             let r = min.minimum();
@@ -308,7 +311,7 @@ mod test {
             }
 
             // print current iteration
-            println!("{} [{}, {}] {} {}", iter, x_lo, x_hi, r, x_hi - x_lo);
+            println!("{} \t [{:.5}, {:.5}] \t {:.5} \t {:.5}", iter, x_lo, x_hi, r, x_hi - x_lo);
 
             iter += 1;
         }

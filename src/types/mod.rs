@@ -108,3 +108,4 @@ pub mod siman;
 pub mod vector;
 pub mod vector_complex;
 pub mod wavelet_transforms;
+pub mod multiroot;

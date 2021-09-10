@@ -95,6 +95,7 @@ pub mod trigonometric;
 pub mod util;
 pub mod wavelet_transforms;
 pub mod zeta;
+pub mod multiroot;
 
 /// The maximum x such that gamma(x) is not considered an overflow.
 pub static SF_GAMMA_XMAX: f64 = 171.0;

@@ -18529,7 +18529,16 @@ extern "C" {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct gsl_multiroot_function_struct;
+pub struct gsl_multiroot_function_struct {
+    pub f: ::std::option::Option<
+        unsafe extern "C" fn(
+            x: *const gsl_vector,
+            params: *mut ::std::os::raw::c_void,
+            f: *mut gsl_vector) -> ::std::os::raw::c_int
+    >,
+    pub n: usize,
+    pub params: *mut ::std::os::raw::c_void,
+}
 pub type gsl_multiroot_function = gsl_multiroot_function_struct;
 extern "C" {
     pub fn gsl_multiroot_fdjacobian(

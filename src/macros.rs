@@ -31,6 +31,67 @@ macro_rules! wrap_callback {
 }
 
 #[doc(hidden)]
+macro_rules! wrap_callback_multi {
+    ($f:expr, $F:ident, $n:ident) => {{
+        unsafe extern "C" fn trampoline< F: Fn(&[f64], &mut[f64])>(
+            x: sys::gsl_vector,
+            params: *mut ::std::os::raw::c_void,
+            f: sys::gsl_vector,
+        ) {
+            let f: &F = &*(params as *const F);
+            f(&x, &mut f)
+        }
+
+        sys::gsl_multiroot_function_struct {
+            f: Some(trampoline::<$F>),
+            n: $n,
+            params: &$f as *const _ as *mut _,
+        }
+    }};
+}
+
+#[doc(hidden)]
+macro_rules! wrap_callback_fdf {
+    ($f:expr, $F:ident $(+ $lt:lifetime)?, $df:expr, $DF:ident $(+ $ltdf:lifetime)?, $fdf:expr, $FDF:ident) => {{
+        unsafe extern "C" fn inner_f<$($lt,)? F: Fn(f64) -> f64 $( + $lt)?>(
+            x: f64,
+            params: *mut ::std::os::raw::c_void,
+        ) -> f64 {
+            let f: &F = &*(params as *const F);
+            let x = f(x);
+            x
+        }
+
+        unsafe extern "C" fn inner_df<$($ltdf,)? DF: Fn(f64) -> f64 $( + $ltdf)?>(
+            x: f64,
+            params: *mut ::std::os::raw::c_void,
+        ) -> f64 {
+            let df: &DF = &*(params as *const DF);
+            let x = df(x);
+            x
+        }
+
+        unsafe extern "C" fn inner_fdf<FDF: Fn(f64, &mut f64, &mut f64)>(
+            x: f64,
+            params: *mut c_void,
+            y: *mut c_double,
+            dy: *mut c_double,
+        ) {
+            let fdf: &FDF =  &*(params as *const FDF);
+            fdf(x, &mut *y, &mut *dy);
+        }
+
+        sys::gsl_function_fdf {
+            f: Some(inner_f::<$F>),
+            df: Some(inner_df::<$DF>),
+            fdf: Some(inner_fdf::<$FDF>),
+            params: &($f, $df, $fdf) as *const _ as *mut _,
+        }
+    }};
+}
+
+
+#[doc(hidden)]
 macro_rules! ffi_wrapper {
     ($name:ident, *mut $ty:ty, $drop:ident $(;$extra_id:ident: $extra_ty:ty => $extra_expr:expr;)* $(, $doc:expr)?) => {
         ffi_wrapper!($name, *mut $ty $(;$extra_id: $extra_ty => $extra_expr;)* $(, $doc)?);

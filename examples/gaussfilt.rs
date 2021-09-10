@@ -6,7 +6,7 @@ extern crate rgsl;
 
 use rgsl::{filter, FilterEnd, FilterGaussianWorkspace, Rng, RngType, VectorF64};
 
-const N: usize = 500; // length of time series
+const N: usize = 500; // length  of time series
 const K: usize = 51; // window size
 const ALPHA: &[f64] = &[0.5, 3., 10.]; // alpha values
 
